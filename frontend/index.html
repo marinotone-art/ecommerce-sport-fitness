@@ -114,13 +114,19 @@
     .cat-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.7) 40%, transparent);
+      background: linear-gradient(to top, rgba(0,0,0,0.75) 50%, transparent);
       display: flex;
-      align-items: flex-end;
+      flex-direction: column;
+      justify-content: flex-end;
       padding: 1rem;
+      gap: 4px;
+      transition: background 0.2s;
     }
 
-    .cat-name { color: white; font-size: 15px; font-weight: 700; }
+    .cat-card:hover .cat-overlay { background: linear-gradient(to top, rgba(230,57,70,0.8) 50%, transparent); }
+
+    .cat-name { color: white; font-size: 16px; font-weight: 700; }
+    .cat-count { color: rgba(255,255,255,0.8); font-size: 12px; font-weight: 500; }
 
     /* FEATURED PRODUCTS */
     .products-grid {
@@ -308,31 +314,49 @@
 <!-- CATEGORIES -->
 <div class="section">
   <h2 class="section-title">Nos catégories</h2>
-  <p class="section-sub">Trouvez l'équipement parfait pour votre sport</p>
+  <p class="section-sub">Cliquez sur une catégorie pour explorer les produits</p>
   <div class="categories-grid">
     <a href="boutique.html?cat=Football" class="cat-card">
       <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=600&q=80" alt="Football">
-      <div class="cat-overlay"><span class="cat-name">⚽ Football</span></div>
+      <div class="cat-overlay">
+        <span class="cat-name">⚽ Football</span>
+        <span class="cat-count">3 produits →</span>
+      </div>
     </a>
     <a href="boutique.html?cat=Running" class="cat-card">
       <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80" alt="Running">
-      <div class="cat-overlay"><span class="cat-name">👟 Running</span></div>
+      <div class="cat-overlay">
+        <span class="cat-name">👟 Running</span>
+        <span class="cat-count">2 produits →</span>
+      </div>
     </a>
     <a href="boutique.html?cat=Basketball" class="cat-card">
-      <img src="https://images.unsplash.com/photo-1546519638405-a9f9d2b3e87a?w=600&q=80" alt="Basketball">
-      <div class="cat-overlay"><span class="cat-name">🏀 Basketball</span></div>
+      <img src="https://images.unsplash.com/photo-1504450758481-7338eba7524a?w=600&q=80" alt="Basketball">
+      <div class="cat-overlay">
+        <span class="cat-name">🏀 Basketball</span>
+        <span class="cat-count">1 produit →</span>
+      </div>
     </a>
     <a href="boutique.html?cat=Fitness" class="cat-card">
       <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80" alt="Fitness">
-      <div class="cat-overlay"><span class="cat-name">🏋️ Fitness</span></div>
+      <div class="cat-overlay">
+        <span class="cat-name">🏋️ Fitness</span>
+        <span class="cat-count">4 produits →</span>
+      </div>
     </a>
     <a href="boutique.html?cat=Tennis" class="cat-card">
       <img src="https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?w=600&q=80" alt="Tennis">
-      <div class="cat-overlay"><span class="cat-name">🎾 Tennis</span></div>
+      <div class="cat-overlay">
+        <span class="cat-name">🎾 Tennis</span>
+        <span class="cat-count">1 produit →</span>
+      </div>
     </a>
     <a href="boutique.html?cat=Boxe" class="cat-card">
       <img src="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=600&q=80" alt="Boxe">
-      <div class="cat-overlay"><span class="cat-name">🥊 Boxe</span></div>
+      <div class="cat-overlay">
+        <span class="cat-name">🥊 Boxe</span>
+        <span class="cat-count">1 produit →</span>
+      </div>
     </a>
   </div>
 </div>
