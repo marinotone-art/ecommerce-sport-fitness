@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Sport & Fitness</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .contact-layout {
+      max-width: 1100px;
+      margin: auto;
+      padding: 3rem 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 3rem;
+    }
+
+    .contact-info h2 { font-size: 24px; font-weight: 700; margin-bottom: 0.5rem; }
+    .contact-info p { color: #888; font-size: 15px; margin-bottom: 2rem; }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding: 1.25rem;
+      background: white;
+      border-radius: 12px;
+      border: 1px solid #eee;
+    }
+
+    .contact-icon {
+      font-size: 1.5rem;
+      width: 48px;
+      height: 48px;
+      background: #fff0f1;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .contact-item h4 { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+    .contact-item p { color: #888; font-size: 13px; margin: 0; }
+    .contact-item a { color: #e63946; text-decoration: none; font-size: 14px; font-weight: 500; }
+
+    .social-links { display: flex; gap: 10px; margin-top: 1.5rem; }
+    .social-btn {
+      padding: 10px 16px;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      background: white;
+      font-size: 20px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .social-btn:hover { background: #111; transform: translateY(-2px); }
+
+    /* FORM */
+    .contact-form-card {
+      background: white;
+      border-radius: 16px;
+      border: 1px solid #eee;
+      padding: 2.5rem;
+    }
+
+    .contact-form-card h2 { font-size: 22px; font-weight: 700; margin-bottom: 0.5rem; }
+    .contact-form-card p { color: #888; font-size: 14px; margin-bottom: 2rem; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .form-group { margin-bottom: 1.25rem; }
+    .form-group label { display: block; font-size: 13px; font-weight: 600; color: #444; margin-bottom: 6px; }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 14px;
+      outline: none;
+      font-family: inherit;
+      transition: border-color 0.15s;
+      background: #fafafa;
+    }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+      border-color: #e63946;
+      background: white;
+    }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: #e63946;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .submit-btn:hover { background: #c1121f; }
+
+    .success-msg {
+      display: none;
+      background: #f0faf0;
+      border: 1px solid #4caf50;
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+      color: #2e7d32;
+      font-size: 14px;
+      margin-top: 1rem;
+    }
+
+    /* CHAT WIDGET */
+    .chat-widget {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 500;
+    }
+
+    .chat-btn {
+      width: 56px;
+      height: 56px;
+      background: #e63946;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(230,57,70,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s;
+    }
+    .chat-btn:hover { transform: scale(1.1); }
+
+    .chat-window {
+      display: none;
+      position: absolute;
+      bottom: 70px;
+      right: 0;
+      width: 320px;
+      background: white;
+      border-radius: 16px;
+      border: 1px solid #eee;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+      overflow: hidden;
+    }
+
+    .chat-window.open { display: block; }
+
+    .chat-head {
+      background: #e63946;
+      color: white;
+      padding: 1rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .chat-head h4 { font-size: 15px; font-weight: 600; }
+    .chat-head span { font-size: 12px; opacity: 0.8; }
+
+    .chat-messages {
+      padding: 1rem;
+      height: 200px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .msg {
+      max-width: 80%;
+      padding: 8px 12px;
+      border-radius: 12px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .msg.bot { background: #f5f5f5; align-self: flex-start; border-radius: 4px 12px 12px 12px; }
+    .msg.user { background: #e63946; color: white; align-self: flex-end; border-radius: 12px 4px 12px 12px; }
+
+    .chat-input {
+      display: flex;
+      border-top: 1px solid #eee;
+    }
+    .chat-input input {
+      flex: 1;
+      border: none;
+      padding: 12px 14px;
+      font-size: 13px;
+      outline: none;
+    }
+    .chat-input button {
+      background: #e63946;
+      color: white;
+      border: none;
+      padding: 12px 14px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    .faq-section {
+      background: #f8f8f6;
+      padding: 3rem 0;
+    }
+    .faq-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .faq-card {
+      background: white;
+      border-radius: 12px;
+      border: 1px solid #eee;
+      padding: 1.5rem;
+    }
+    .faq-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 0.5rem; }
+    .faq-card p { font-size: 14px; color: #888; }
+
+    @media (max-width: 768px) {
+      .contact-layout { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">⚡ Sport<span style="color:#e63946">&Fitness</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="boutique.html">Boutique</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="about.html">À propos</a></li>
+      <li><a href="localisation.html">Localisation</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+    <div class="header-actions">
+      <button class="cart-btn" onclick="window.location.href='boutique.html'">🛍 Boutique</button>
+      <button class="burger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">🏠 Accueil</a>
+  <a href="boutique.html">🛍 Boutique</a>
+  <a href="services.html">⚙️ Services</a>
+  <a href="about.html">👥 À propos</a>
+  <a href="localisation.html">📍 Localisation</a>
+  <a href="contact.html">✉️ Contact</a>
+</div>
+
+<div class="page-hero">
+  <h1>✉️ Contactez-nous</h1>
+  <p>Notre équipe est disponible pour répondre à toutes vos questions</p>
+</div>
+
+<div class="contact-layout">
+  <!-- INFO -->
+  <div class="contact-info">
+    <h2>Nous sommes là pour vous</h2>
+    <p>Envoyez-nous un message ou contactez-nous directement. Réponse garantie sous 24h.</p>
+
+    <div class="contact-item">
+      <div class="contact-icon">📍</div>
+      <div>
+        <h4>Adresse</h4>
+        <p>Route des Almadies, Dakar, Sénégal</p>
+        <a href="localisation.html">Voir sur la carte →</a>
+      </div>
+    </div>
+
+    <div class="contact-item">
+      <div class="contact-icon">📞</div>
+      <div>
+        <h4>Téléphone</h4>
+        <p>Lun - Sam : 8h00 - 20h00</p>
+        <a href="tel:+221770000000">+221 77 000 00 00</a>
+      </div>
+    </div>
+
+    <div class="contact-item">
+      <div class="contact-icon">✉️</div>
+      <div>
+        <h4>Email</h4>
+        <p>Réponse sous 24h ouvrées</p>
+        <a href="mailto:contact@sportfitness.sn">contact@sportfitness.sn</a>
+      </div>
+    </div>
+
+    <div class="contact-item">
+      <div class="contact-icon">💬</div>
+      <div>
+        <h4>WhatsApp</h4>
+        <p>Disponible 7j/7 de 8h à 22h</p>
+        <a href="#">Discuter sur WhatsApp →</a>
+      </div>
+    </div>
+
+    <div class="social-links">
+      <a href="#" class="social-btn" title="Facebook">📘</a>
+      <a href="#" class="social-btn" title="Instagram">📷</a>
+      <a href="#" class="social-btn" title="Twitter">🐦</a>
+      <a href="#" class="social-btn" title="YouTube">▶️</a>
+    </div>
+  </div>
+
+  <!-- FORM -->
+  <div class="contact-form-card">
+    <h2>Envoyez-nous un message</h2>
+    <p>Remplissez le formulaire ci-dessous et nous vous répondrons rapidement.</p>
+
+    <form onsubmit="sendForm(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Prénom *</label>
+          <input type="text" placeholder="Votre prénom" required>
+        </div>
+        <div class="form-group">
+          <label>Nom *</label>
+          <input type="text" placeholder="Votre nom" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email *</label>
+        <input type="email" placeholder="votre@email.com" required>
+      </div>
+      <div class="form-group">
+        <label>Téléphone</label>
+        <input type="tel" placeholder="+221 77 000 00 00">
+      </div>
+      <div class="form-group">
+        <label>Sujet *</label>
+        <select required>
+          <option value="">Choisissez un sujet</option>
+          <option>Commande / Livraison</option>
+          <option>Retour / Remboursement</option>
+          <option>Coaching sportif</option>
+          <option>Produit indisponible</option>
+          <option>Autre demande</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Message *</label>
+        <textarea placeholder="Décrivez votre demande en détail..." required></textarea>
+      </div>
+      <button type="submit" class="submit-btn">Envoyer le message →</button>
+      <div class="success-msg" id="successMsg">
+        ✅ Votre message a bien été envoyé ! Nous vous répondrons sous 24h.
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="faq-section">
+  <div class="section" style="padding-top:0; padding-bottom:0">
+    <h2 class="section-title">Questions fréquentes</h2>
+    <p class="section-sub">Les réponses aux questions les plus posées</p>
+    <div class="faq-grid">
+      <div class="faq-card">
+        <h4>📦 Quels sont les délais de livraison ?</h4>
+        <p>24-48h à Dakar, 72h dans les autres villes du Sénégal. Livraison gratuite dès 50 000 FCFA.</p>
+      </div>
+      <div class="faq-card">
+        <h4>💳 Quels modes de paiement acceptez-vous ?</h4>
+        <p>Wave, Orange Money, Free Money, carte bancaire et paiement à la livraison.</p>
+      </div>
+      <div class="faq-card">
+        <h4>🔄 Comment retourner un article ?</h4>
+        <p>Contactez-nous dans les 30 jours suivant votre achat. Remboursement sous 5 jours ouvrés.</p>
+      </div>
+      <div class="faq-card">
+        <h4>✅ Les produits sont-ils authentiques ?</h4>
+        <p>Oui, 100% de nos produits sont originaux et certifiés par les marques partenaires.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<div class="newsletter">
+  <h2>📧 Restez informé</h2>
+  <p>Recevez nos offres et actualités sportives par email.</p>
+  <form class="newsletter-form" onsubmit="e=>{e.preventDefault();alert('✅ Merci !')}">
+    <input type="email" placeholder="Votre adresse email" required>
+    <button type="submit">S'abonner</button>
+  </form>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <h4>⚡ Sport & Fitness</h4>
+      <p style="font-size:14px;color:#888;margin-bottom:1rem">Votre partenaire sportif à Dakar.</p>
+      <p style="font-size:13px;color:#666">📍 Almadies, Dakar</p>
+      <p style="font-size:13px;color:#666">📞 +221 77 000 00 00</p>
+    </div>
+    <div>
+      <h4>Navigation</h4>
+      <a href="index.html">Accueil</a>
+      <a href="boutique.html">Boutique</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Sport & Fitness Shop</span>
+    <span>Made with ❤️ à Dakar</span>
+  </div>
+</footer>
+
+<!-- CHAT WIDGET -->
+<div class="chat-widget">
+  <div class="chat-window" id="chatWindow">
+    <div class="chat-head">
+      <div><h4>💬 Service Client</h4><span>🟢 En ligne maintenant</span></div>
+      <button onclick="toggleChat()" style="background:none;border:none;color:white;font-size:18px;cursor:pointer">✕</button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="msg bot">👋 Bonjour ! Comment puis-je vous aider aujourd'hui ?</div>
+      <div class="msg bot">Vous pouvez me poser des questions sur nos produits, livraisons ou retours.</div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="chatInput" placeholder="Tapez votre message..." onkeydown="if(event.key==='Enter') sendMsg()">
+      <button onclick="sendMsg()">➤</button>
+    </div>
+  </div>
+  <button class="chat-btn" onclick="toggleChat()">💬</button>
+</div>
+
+<script>
+  function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+
+  function sendForm(e) {
+    e.preventDefault();
+    document.getElementById('successMsg').style.display = 'block';
+    e.target.reset();
+  }
+
+  function toggleChat() {
+    document.getElementById('chatWindow').classList.toggle('open');
+  }
+
+  const autoReplies = {
+    'livraison': '🚚 Nous livrons en 24-48h à Dakar et 72h dans tout le Sénégal. Livraison gratuite dès 50 000 FCFA.',
+    'retour': '🔄 Vous avez 30 jours pour retourner un article. Remboursement sous 5 jours ouvrés.',
+    'paiement': '💳 Nous acceptons Wave, Orange Money, carte bancaire et paiement à la livraison.',
+    'prix': '💰 Consultez notre boutique pour voir tous nos prix en FCFA.',
+    'commande': '📦 Pour suivre votre commande, contactez-nous avec votre numéro de commande.',
+    default: '😊 Merci pour votre message ! Un agent va vous répondre très prochainement. Vous pouvez aussi nous appeler au +221 77 000 00 00.'
+  };
+
+  function sendMsg() {
+    const input = document.getElementById('chatInput');
+    const msg = input.value.trim();
+    if (!msg) return;
+
+    const msgs = document.getElementById('chatMessages');
+    msgs.innerHTML += `<div class="msg user">${msg}</div>`;
+    input.value = '';
+
+    setTimeout(() => {
+      const lower = msg.toLowerCase();
+      let reply = autoReplies.default;
+      for (const key in autoReplies) {
+        if (lower.includes(key)) { reply = autoReplies[key]; break; }
+      }
+      msgs.innerHTML += `<div class="msg bot">${reply}</div>`;
+      msgs.scrollTop = msgs.scrollHeight;
+    }, 800);
+
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+</script>
+
+</body>
+</html>

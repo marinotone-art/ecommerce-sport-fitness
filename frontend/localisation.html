@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Localisation — Sport & Fitness</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .map-container {
+      width: 100%;
+      height: 480px;
+      border: none;
+      display: block;
+    }
+
+    .store-layout {
+      max-width: 1100px;
+      margin: auto;
+      padding: 3rem 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+
+    .store-info h2 { font-size: 24px; font-weight: 700; margin-bottom: 0.5rem; }
+    .store-info p { color: #888; font-size: 15px; margin-bottom: 2rem; }
+
+    .info-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      padding: 1.25rem;
+      background: white;
+      border-radius: 12px;
+      border: 1px solid #eee;
+      margin-bottom: 1rem;
+    }
+
+    .info-icon {
+      font-size: 1.4rem;
+      width: 44px;
+      height: 44px;
+      background: #fff0f1;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .info-item h4 { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+    .info-item p { font-size: 13px; color: #888; margin: 0; }
+
+    .hours-table { width: 100%; border-collapse: collapse; }
+    .hours-table tr { border-bottom: 1px solid #f0f0f0; }
+    .hours-table td { padding: 10px 0; font-size: 14px; }
+    .hours-table td:last-child { text-align: right; font-weight: 500; }
+    .hours-table tr.today td { color: #e63946; font-weight: 600; }
+    .closed { color: #aaa !important; }
+
+    .directions-card {
+      background: white;
+      border-radius: 16px;
+      border: 1px solid #eee;
+      padding: 2rem;
+    }
+
+    .directions-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 0.5rem; }
+    .directions-card p { font-size: 14px; color: #888; margin-bottom: 1.5rem; }
+
+    .transport-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 12px 0;
+      border-bottom: 1px solid #f5f5f5;
+      font-size: 14px;
+    }
+
+    .transport-icon { font-size: 1.5rem; width: 36px; text-align: center; }
+    .transport-info strong { display: block; font-size: 14px; color: #111; }
+    .transport-info span { font-size: 13px; color: #888; }
+
+    .nearby-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .nearby-card {
+      background: white;
+      border-radius: 12px;
+      border: 1px solid #eee;
+      padding: 1.25rem;
+      text-align: center;
+    }
+
+    .nearby-card div:first-child { font-size: 2rem; margin-bottom: 0.5rem; }
+    .nearby-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+    .nearby-card p { font-size: 13px; color: #888; }
+
+    @media (max-width: 768px) {
+      .store-layout { grid-template-columns: 1fr; }
+      .map-container { height: 300px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">⚡ Sport<span style="color:#e63946">&Fitness</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="boutique.html">Boutique</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="about.html">À propos</a></li>
+      <li><a href="localisation.html" class="active">Localisation</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="header-actions">
+      <button class="cart-btn" onclick="window.location.href='boutique.html'">🛍 Boutique</button>
+      <button class="burger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">🏠 Accueil</a>
+  <a href="boutique.html">🛍 Boutique</a>
+  <a href="services.html">⚙️ Services</a>
+  <a href="about.html">👥 À propos</a>
+  <a href="localisation.html">📍 Localisation</a>
+  <a href="contact.html">✉️ Contact</a>
+</div>
+
+<div class="page-hero">
+  <h1>📍 Notre Localisation</h1>
+  <p>Retrouvez-nous aux Almadies, au cœur de Dakar</p>
+</div>
+
+<!-- MAP -->
+<iframe
+  class="map-container"
+  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15419.15695773!2d-17.5!3d14.75!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xec172f5b3c0a7c9%3A0x8a2b2c2d3e4f5a6b!2sAlmadies%2C%20Dakar!5e0!3m2!1sfr!2ssn!4v1700000000000!5m2!1sfr!2ssn"
+  allowfullscreen=""
+  loading="lazy"
+  referrerpolicy="no-referrer-when-downgrade">
+</iframe>
+
+<div class="store-layout">
+  <!-- STORE INFO -->
+  <div class="store-info">
+    <h2>Informations pratiques</h2>
+    <p>Venez nous rendre visite dans notre boutique physique</p>
+
+    <div class="info-item">
+      <div class="info-icon">📍</div>
+      <div>
+        <h4>Adresse</h4>
+        <p>Route des Almadies, Dakar, Sénégal<br>En face de la station Total Almadies</p>
+      </div>
+    </div>
+
+    <div class="info-item">
+      <div class="info-icon">📞</div>
+      <div>
+        <h4>Téléphone</h4>
+        <p>+221 77 000 00 00<br>+221 33 000 00 00</p>
+      </div>
+    </div>
+
+    <div class="info-item">
+      <div class="info-icon">🕐</div>
+      <div>
+        <h4>Horaires d'ouverture</h4>
+        <table class="hours-table">
+          <tr class="today"><td>Lundi — Vendredi</td><td>08h00 — 20h00</td></tr>
+          <tr><td>Samedi</td><td>09h00 — 18h00</td></tr>
+          <tr><td>Dimanche</td><td class="closed">Fermé</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div style="margin-top:1.5rem; display:flex; gap:10px; flex-wrap:wrap;">
+      <a href="https://www.google.com/maps" target="_blank" class="btn btn-primary">🗺 Itinéraire Google Maps</a>
+      <a href="contact.html" class="btn btn-outline">✉️ Nous contacter</a>
+    </div>
+  </div>
+
+  <!-- DIRECTIONS -->
+  <div class="directions-card">
+    <h3>🚗 Comment nous rejoindre</h3>
+    <p>Plusieurs moyens de transport pour venir nous voir facilement</p>
+
+    <div class="transport-item">
+      <div class="transport-icon">🚗</div>
+      <div class="transport-info">
+        <strong>En voiture</strong>
+        <span>Parking gratuit disponible sur place, capacité 30 véhicules</span>
+      </div>
+    </div>
+
+    <div class="transport-item">
+      <div class="transport-icon">🚌</div>
+      <div class="transport-info">
+        <strong>En bus (DDD)</strong>
+        <span>Lignes 13, 15 et 27 — Arrêt "Almadies Marché"</span>
+      </div>
+    </div>
+
+    <div class="transport-item">
+      <div class="transport-icon">🛺</div>
+      <div class="transport-info">
+        <strong>En taxi / Yango / InDrive</strong>
+        <span>Indiquer "Route des Almadies, face Total"</span>
+      </div>
+    </div>
+
+    <div class="transport-item">
+      <div class="transport-icon">🚲</div>
+      <div class="transport-info">
+        <strong>À vélo</strong>
+        <span>Piste cyclable disponible sur la route des Almadies</span>
+      </div>
+    </div>
+
+    <div style="margin-top:1.5rem; background:#fff0f1; border-radius:8px; padding:1rem; font-size:13px; color:#e63946;">
+      ⚡ <strong>Livraison à domicile disponible</strong> — Pas besoin de vous déplacer ! Commandez sur notre site et recevez votre commande en 24-48h.
+    </div>
+  </div>
+</div>
+
+<!-- NEARBY -->
+<div style="background:#f8f8f6; padding:3rem 0">
+  <div class="section" style="padding-top:0; padding-bottom:0">
+    <h2 class="section-title">Autour de nous</h2>
+    <p class="section-sub">Les points de repère proches de notre boutique</p>
+    <div class="nearby-grid">
+      <div class="nearby-card">
+        <div>🏨</div>
+        <h4>King Fahd Palace</h4>
+        <p>À 5 min en voiture</p>
+      </div>
+      <div class="nearby-card">
+        <div>🏖️</div>
+        <h4>Plage des Almadies</h4>
+        <p>À 10 min à pied</p>
+      </div>
+      <div class="nearby-card">
+        <div>✈️</div>
+        <h4>Aéroport LSS</h4>
+        <p>À 45 min en voiture</p>
+      </div>
+      <div class="nearby-card">
+        <div>🏥</div>
+        <h4>Clinique Pasteur</h4>
+        <p>À 8 min en voiture</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<div class="newsletter">
+  <h2>📧 Restez informé</h2>
+  <p>Recevez nos offres exclusives directement par email.</p>
+  <form class="newsletter-form" onsubmit="e=>{e.preventDefault();alert('✅ Merci !')}">
+    <input type="email" placeholder="Votre adresse email" required>
+    <button type="submit">S'abonner</button>
+  </form>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <h4>⚡ Sport & Fitness</h4>
+      <p style="font-size:14px;color:#888;margin-bottom:1rem">Votre partenaire sportif à Dakar.</p>
+      <p style="font-size:13px;color:#666">📍 Almadies, Dakar</p>
+      <p style="font-size:13px;color:#666">📞 +221 77 000 00 00</p>
+    </div>
+    <div>
+      <h4>Navigation</h4>
+      <a href="index.html">Accueil</a>
+      <a href="boutique.html">Boutique</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Sport & Fitness Shop</span>
+    <span>Made with ❤️ à Dakar</span>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+</script>
+</body>
+</html>

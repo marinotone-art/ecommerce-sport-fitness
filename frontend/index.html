@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sport & Fitness Shop — Dakar</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* HERO */
+    .hero {
+      position: relative;
+      height: 90vh;
+      min-height: 500px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .hero-img {
+      position: absolute;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1920&q=90') center/cover no-repeat;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(0,0,0,0.75) 40%, rgba(0,0,0,0.1));
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: auto;
+      padding: 2rem;
+      color: white;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: #e63946;
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 4px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 5vw, 64px);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      max-width: 600px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 2rem;
+      max-width: 450px;
+    }
+
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    /* STATS BAR */
+    .stats-bar {
+      background: #111;
+      color: white;
+      padding: 1.5rem 2rem;
+    }
+
+    .stats-inner {
+      max-width: 1200px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      text-align: center;
+    }
+
+    .stat-num { font-size: 24px; font-weight: 800; color: #e63946; }
+    .stat-label { font-size: 13px; color: #aaa; margin-top: 2px; }
+
+    /* CATEGORIES */
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+    }
+
+    .cat-card {
+      position: relative;
+      height: 220px;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .cat-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+
+    .cat-card:hover img { transform: scale(1.05); }
+
+    .cat-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.7) 40%, transparent);
+      display: flex;
+      align-items: flex-end;
+      padding: 1rem;
+    }
+
+    .cat-name { color: white; font-size: 15px; font-weight: 700; }
+
+    /* FEATURED PRODUCTS */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1px;
+      background: #e8e8e8;
+      border: 1px solid #e8e8e8;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .card {
+      background: white;
+      padding: 1.5rem;
+      transition: background 0.1s;
+    }
+
+    .card:hover { background: #fafaf8; }
+    .card-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .card-cat { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #aaa; margin-bottom: 4px; }
+    .card-name { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+    .card-price { font-size: 15px; font-weight: 700; color: #e63946; }
+    .card-btn {
+      margin-top: 1rem;
+      width: 100%;
+      padding: 9px;
+      font-size: 13px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: none;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.15s;
+    }
+    .card-btn:hover { background: #111; color: white; border-color: #111; }
+
+    /* PROMO BANNER */
+    .promo-banner {
+      background: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1920&q=90') center/cover no-repeat;
+      position: relative;
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+
+    .promo-banner::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+    }
+
+    .promo-content {
+      position: relative;
+      z-index: 2;
+      color: white;
+    }
+
+    .promo-content h2 { font-size: 36px; font-weight: 800; margin-bottom: 0.5rem; }
+    .promo-content p { font-size: 18px; color: rgba(255,255,255,0.8); margin-bottom: 1.5rem; }
+
+    /* WHY US */
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .why-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      border: 1px solid #eee;
+      text-align: center;
+    }
+
+    .why-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .why-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 0.5rem; }
+    .why-card p { font-size: 14px; color: #888; }
+
+    /* TESTIMONIALS */
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .testi-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      border: 1px solid #eee;
+    }
+
+    .testi-stars { color: #f4a01c; font-size: 14px; margin-bottom: 0.75rem; }
+    .testi-text { font-size: 14px; color: #555; margin-bottom: 1rem; line-height: 1.7; }
+    .testi-author { display: flex; align-items: center; gap: 10px; }
+    .testi-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: #f0f0f0; display: flex; align-items: center;
+      justify-content: center; font-size: 16px;
+    }
+    .testi-name { font-size: 14px; font-weight: 600; }
+    .testi-role { font-size: 12px; color: #aaa; }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">⚡ Sport<span>&Fitness</span></a>
+
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Accueil</a></li>
+      <li><a href="boutique.html">Boutique</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="about.html">À propos</a></li>
+      <li><a href="localisation.html">Localisation</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+
+    <div class="header-actions">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Rechercher..." onkeydown="if(event.key==='Enter') goSearch()">
+        <button onclick="goSearch()">🔍</button>
+      </div>
+      <button class="cart-btn" onclick="toggleCart()">
+        🛍 Panier <span class="cart-count" id="cnt">0</span>
+      </button>
+      <button class="burger" onclick="toggleMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">🏠 Accueil</a>
+  <a href="boutique.html">🛍 Boutique</a>
+  <a href="services.html">⚙️ Services</a>
+  <a href="about.html">👥 À propos</a>
+  <a href="localisation.html">📍 Localisation</a>
+  <a href="contact.html">✉️ Contact</a>
+</div>
+
+<!-- CART PANEL -->
+<div class="overlay" id="overlay" onclick="toggleCart()"></div>
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-header">
+    <h2>🛍 Mon Panier</h2>
+    <button class="close-btn" onclick="toggleCart()">✕</button>
+  </div>
+  <div id="cartItems"><p class="cart-empty">Votre panier est vide</p></div>
+  <div class="cart-total"><span>Total</span><span id="total">0 FCFA</span></div>
+  <button class="checkout-btn">Passer la commande →</button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-img"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-badge">🏆 N°1 au Sénégal</span>
+    <h1>Équipez-vous pour la victoire</h1>
+    <p>Les meilleurs équipements sportifs livrés partout à Dakar et au Sénégal.</p>
+    <div class="hero-btns">
+      <a href="boutique.html" class="btn btn-primary">Voir la boutique →</a>
+      <a href="services.html" class="btn btn-white">Nos services</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div><div class="stat-num">2 500+</div><div class="stat-label">Clients satisfaits</div></div>
+    <div><div class="stat-num">12</div><div class="stat-label">Catégories sport</div></div>
+    <div><div class="stat-num">48h</div><div class="stat-label">Livraison Dakar</div></div>
+    <div><div class="stat-num">100%</div><div class="stat-label">Produits authentiques</div></div>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<div class="section">
+  <h2 class="section-title">Nos catégories</h2>
+  <p class="section-sub">Trouvez l'équipement parfait pour votre sport</p>
+  <div class="categories-grid">
+    <a href="boutique.html?cat=Football" class="cat-card">
+      <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=600&q=80" alt="Football">
+      <div class="cat-overlay"><span class="cat-name">⚽ Football</span></div>
+    </a>
+    <a href="boutique.html?cat=Running" class="cat-card">
+      <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80" alt="Running">
+      <div class="cat-overlay"><span class="cat-name">👟 Running</span></div>
+    </a>
+    <a href="boutique.html?cat=Basketball" class="cat-card">
+      <img src="https://images.unsplash.com/photo-1546519638405-a9f9d2b3e87a?w=600&q=80" alt="Basketball">
+      <div class="cat-overlay"><span class="cat-name">🏀 Basketball</span></div>
+    </a>
+    <a href="boutique.html?cat=Fitness" class="cat-card">
+      <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80" alt="Fitness">
+      <div class="cat-overlay"><span class="cat-name">🏋️ Fitness</span></div>
+    </a>
+    <a href="boutique.html?cat=Tennis" class="cat-card">
+      <img src="https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?w=600&q=80" alt="Tennis">
+      <div class="cat-overlay"><span class="cat-name">🎾 Tennis</span></div>
+    </a>
+    <a href="boutique.html?cat=Boxe" class="cat-card">
+      <img src="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=600&q=80" alt="Boxe">
+      <div class="cat-overlay"><span class="cat-name">🥊 Boxe</span></div>
+    </a>
+  </div>
+</div>
+
+<!-- FEATURED PRODUCTS -->
+<div class="section" style="padding-top:0">
+  <h2 class="section-title">Produits populaires</h2>
+  <p class="section-sub">Les articles les plus appréciés par nos clients</p>
+  <div class="products-grid" id="products"></div>
+  <div style="text-align:center; margin-top:2rem">
+    <a href="boutique.html" class="btn btn-outline">Voir tous les produits →</a>
+  </div>
+</div>
+
+<!-- PROMO BANNER -->
+<div class="promo-banner">
+  <div class="promo-content">
+    <h2>🏃 Prêt à dépasser vos limites ?</h2>
+    <p>Livraison gratuite à Dakar pour toute commande supérieure à 50 000 FCFA</p>
+    <a href="boutique.html" class="btn btn-primary">Profiter de l'offre →</a>
+  </div>
+</div>
+
+<!-- WHY US -->
+<div class="section">
+  <h2 class="section-title">Pourquoi nous choisir ?</h2>
+  <p class="section-sub">Votre satisfaction est notre priorité</p>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-icon">🚚</div>
+      <h3>Livraison rapide</h3>
+      <p>Livraison en 24-48h à Dakar et 72h dans tout le Sénégal.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">✅</div>
+      <h3>Produits authentiques</h3>
+      <p>100% de produits originaux, certifiés par les marques.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">💳</div>
+      <h3>Paiement sécurisé</h3>
+      <p>Wave, Orange Money, carte bancaire ou paiement à la livraison.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🔄</div>
+      <h3>Retours faciles</h3>
+      <p>30 jours pour retourner un article sans justification.</p>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div class="section" style="padding-top:0">
+  <h2 class="section-title">Ce que disent nos clients</h2>
+  <p class="section-sub">Plus de 2 500 clients nous font confiance</p>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Excellent service ! Mes crampons sont arrivés en 24h, qualité au top. Je recommande vivement cette boutique à tous les amateurs de sport."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">👨🏾</div>
+        <div><div class="testi-name">Moussa Diallo</div><div class="testi-role">Client vérifié • Dakar</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"La montre GPS est parfaite pour mes entraînements. Prix imbattable et livraison soignée. Je suis vraiment satisfaite de mon achat."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">👩🏾</div>
+        <div><div class="testi-name">Fatou Sow</div><div class="testi-role">Cliente vérifiée • Thiès</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★☆</div>
+      <p class="testi-text">"Très bonne sélection d'articles de fitness. Le service client est réactif et professionnel. Je reviendrai certainement pour mes prochains achats."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">👨🏾</div>
+        <div><div class="testi-name">Ibrahima Ndiaye</div><div class="testi-role">Client vérifié • Saint-Louis</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<div class="newsletter">
+  <h2>📧 Restez informé</h2>
+  <p>Recevez nos offres exclusives, nouveautés et conseils sportifs directement dans votre boîte mail.</p>
+  <form class="newsletter-form" onsubmit="subscribe(event)">
+    <input type="email" id="emailInput" placeholder="Votre adresse email" required>
+    <button type="submit">S'abonner</button>
+  </form>
+  <p id="subMsg" style="margin-top:1rem; color:#4caf50; display:none">✅ Merci pour votre inscription !</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <h4>⚡ Sport & Fitness</h4>
+      <p style="font-size:14px; color:#888; margin-bottom:1rem">Votre partenaire sportif de confiance à Dakar depuis 2020.</p>
+      <p style="font-size:13px; color:#666">📍 Almadies, Dakar, Sénégal</p>
+      <p style="font-size:13px; color:#666">📞 +221 77 000 00 00</p>
+    </div>
+    <div>
+      <h4>Boutique</h4>
+      <a href="boutique.html">Tous les produits</a>
+      <a href="boutique.html?cat=Football">Football</a>
+      <a href="boutique.html?cat=Fitness">Fitness</a>
+      <a href="boutique.html?cat=Running">Running</a>
+    </div>
+    <div>
+      <h4>Informations</h4>
+      <a href="services.html">Nos services</a>
+      <a href="about.html">À propos</a>
+      <a href="localisation.html">Localisation</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div>
+      <h4>Paiement accepté</h4>
+      <p style="font-size:14px; color:#888">💸 Wave</p>
+      <p style="font-size:14px; color:#888">📱 Orange Money</p>
+      <p style="font-size:14px; color:#888">💳 Carte bancaire</p>
+      <p style="font-size:14px; color:#888">💵 Paiement à la livraison</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Sport & Fitness Shop. Tous droits réservés.</span>
+    <span>Made with ❤️ à Dakar</span>
+  </div>
+</footer>
+
+<script>
+  let allProducts = [];
+  let cart = [];
+
+  fetch('http://localhost:3000/products')
+    .then(r => r.json())
+    .then(data => {
+      allProducts = data;
+      renderProducts(data.slice(0, 8));
+    })
+    .catch(() => {
+      document.getElementById('products').innerHTML = '<p style="padding:2rem; color:#aaa; text-align:center">Démarrez le serveur backend pour voir les produits.</p>';
+    });
+
+  function fmt(n) { return n.toLocaleString('fr-FR') + ' FCFA'; }
+
+  function renderProducts(list) {
+    document.getElementById('products').innerHTML = list.map(p => `
+      <div class="card">
+        <div class="card-icon">${p.image}</div>
+        <div class="card-cat">${p.category}</div>
+        <div class="card-name">${p.name}</div>
+        <div class="card-price">${fmt(p.price)}</div>
+        <button class="card-btn" onclick="add(${p.id})">Ajouter au panier</button>
+      </div>`).join('');
+  }
+
+  function add(id) {
+    const p = allProducts.find(x => x.id === id);
+    cart.push(p);
+    document.getElementById('cnt').textContent = cart.length;
+    document.getElementById('cartItems').innerHTML = cart.map(p =>
+      `<div class="cart-item"><span class="cart-item-name">${p.image} ${p.name}</span><span class="cart-item-price">${fmt(p.price)}</span></div>`).join('');
+    document.getElementById('total').textContent = fmt(cart.reduce((s, p) => s + p.price, 0));
+    toggleCart();
+  }
+
+  function toggleCart() {
+    document.getElementById('cartPanel').classList.toggle('open');
+    document.getElementById('overlay').classList.toggle('open');
+  }
+
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  function goSearch() {
+    const q = document.getElementById('searchInput').value;
+    if (q) window.location.href = 'boutique.html?q=' + encodeURIComponent(q);
+  }
+
+  function subscribe(e) {
+    e.preventDefault();
+    document.getElementById('subMsg').style.display = 'block';
+    document.getElementById('emailInput').value = '';
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boutique — Sport & Fitness</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .shop-layout {
+      max-width: 1200px;
+      margin: auto;
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 2rem;
+    }
+
+    .sidebar {
+      background: white;
+      border-radius: 12px;
+      border: 1px solid #eee;
+      padding: 1.5rem;
+      height: fit-content;
+      position: sticky;
+      top: 80px;
+    }
+
+    .sidebar h3 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; color: #aaa; margin-bottom: 1rem; }
+
+    .filter-btn {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 10px 12px;
+      font-size: 14px;
+      background: none;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      color: #555;
+      transition: all 0.15s;
+      margin-bottom: 4px;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      background: #111;
+      color: white;
+    }
+
+    .price-filter { margin-top: 1.5rem; }
+    .price-filter input[type=range] { width: 100%; margin: 8px 0; }
+    .price-label { font-size: 13px; color: #888; }
+
+    .shop-main {}
+
+    .shop-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .search-bar {
+      display: flex;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      overflow: hidden;
+      background: white;
+      flex: 1;
+      max-width: 360px;
+    }
+
+    .search-bar input {
+      flex: 1;
+      border: none;
+      padding: 10px 14px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .search-bar button {
+      background: #111;
+      color: white;
+      border: none;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    .result-count { font-size: 14px; color: #888; }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1px;
+      background: #e8e8e8;
+      border: 1px solid #e8e8e8;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .card { background: white; padding: 1.5rem; transition: background 0.1s; }
+    .card:hover { background: #fafaf8; }
+    .card-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .card-cat { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #aaa; margin-bottom: 4px; }
+    .card-name { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+    .card-price { font-size: 15px; font-weight: 700; color: #e63946; }
+    .card-btn {
+      margin-top: 1rem;
+      width: 100%;
+      padding: 9px;
+      font-size: 13px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: none;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.15s;
+    }
+    .card-btn:hover { background: #111; color: white; border-color: #111; }
+
+    .no-results { text-align: center; padding: 4rem 2rem; color: #aaa; }
+    .no-results div { font-size: 3rem; margin-bottom: 1rem; }
+
+    @media (max-width: 768px) {
+      .shop-layout { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">⚡ Sport<span style="color:#e63946">&Fitness</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="boutique.html" class="active">Boutique</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="about.html">À propos</a></li>
+      <li><a href="localisation.html">Localisation</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="header-actions">
+      <button class="cart-btn" onclick="toggleCart()">🛍 Panier <span class="cart-count" id="cnt">0</span></button>
+      <button class="burger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">🏠 Accueil</a>
+  <a href="boutique.html">🛍 Boutique</a>
+  <a href="services.html">⚙️ Services</a>
+  <a href="about.html">👥 À propos</a>
+  <a href="localisation.html">📍 Localisation</a>
+  <a href="contact.html">✉️ Contact</a>
+</div>
+
+<div class="overlay" id="overlay" onclick="toggleCart()"></div>
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-header">
+    <h2>🛍 Mon Panier</h2>
+    <button class="close-btn" onclick="toggleCart()">✕</button>
+  </div>
+  <div id="cartItems"><p class="cart-empty">Votre panier est vide</p></div>
+  <div class="cart-total"><span>Total</span><span id="total">0 FCFA</span></div>
+  <button class="checkout-btn">Passer la commande →</button>
+</div>
+
+<div class="page-hero">
+  <h1>🛍 Notre Boutique</h1>
+  <p>Découvrez notre sélection complète d'équipements sportifs</p>
+</div>
+
+<div class="shop-layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h3>Catégories</h3>
+    <button class="filter-btn active" onclick="filterCat('Tous', this)">🏅 Tous les produits</button>
+    <button class="filter-btn" onclick="filterCat('Football', this)">⚽ Football</button>
+    <button class="filter-btn" onclick="filterCat('Basketball', this)">🏀 Basketball</button>
+    <button class="filter-btn" onclick="filterCat('Tennis', this)">🎾 Tennis</button>
+    <button class="filter-btn" onclick="filterCat('Boxe', this)">🥊 Boxe</button>
+    <button class="filter-btn" onclick="filterCat('Fitness', this)">🏋️ Fitness</button>
+    <button class="filter-btn" onclick="filterCat('Running', this)">👟 Running</button>
+
+    <div class="price-filter">
+      <h3>Prix maximum</h3>
+      <input type="range" id="priceRange" min="5000" max="300000" step="5000" value="300000" oninput="filterPrice()">
+      <div class="price-label">Jusqu'à <span id="priceVal">300 000</span> FCFA</div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="shop-main">
+    <div class="shop-toolbar">
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Rechercher un produit..." oninput="filterSearch()">
+        <button>🔍</button>
+      </div>
+      <span class="result-count" id="resultCount"></span>
+    </div>
+    <div class="products-grid" id="products"></div>
+    <div class="no-results" id="noResults" style="display:none">
+      <div>🔍</div>
+      <p>Aucun produit trouvé pour votre recherche.</p>
+    </div>
+  </div>
+</div>
+
+<div class="newsletter">
+  <h2>📧 Restez informé</h2>
+  <p>Recevez nos offres exclusives et nouveautés directement par email.</p>
+  <form class="newsletter-form" onsubmit="sub(event)">
+    <input type="email" placeholder="Votre adresse email" required>
+    <button type="submit">S'abonner</button>
+  </form>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <h4>⚡ Sport & Fitness</h4>
+      <p style="font-size:14px;color:#888;margin-bottom:1rem">Votre partenaire sportif à Dakar.</p>
+      <p style="font-size:13px;color:#666">📍 Almadies, Dakar</p>
+      <p style="font-size:13px;color:#666">📞 +221 77 000 00 00</p>
+    </div>
+    <div>
+      <h4>Navigation</h4>
+      <a href="index.html">Accueil</a>
+      <a href="boutique.html">Boutique</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Sport & Fitness Shop</span>
+    <span>Made with ❤️ à Dakar</span>
+  </div>
+</footer>
+
+<script>
+  let allProducts = [];
+  let cart = [];
+  let currentCat = 'Tous';
+  let maxPrice = 300000;
+
+  fetch('http://localhost:3000/products')
+    .then(r => r.json())
+    .then(data => {
+      allProducts = data;
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('cat')) {
+        currentCat = params.get('cat');
+        document.querySelectorAll('.filter-btn').forEach(b => {
+          b.classList.toggle('active', b.textContent.includes(currentCat));
+        });
+      }
+      if (params.get('q')) {
+        document.getElementById('searchInput').value = params.get('q');
+      }
+      applyFilters();
+    });
+
+  function fmt(n) { return n.toLocaleString('fr-FR') + ' FCFA'; }
+
+  function applyFilters() {
+    const q = document.getElementById('searchInput').value.toLowerCase();
+    let list = allProducts;
+    if (currentCat !== 'Tous') list = list.filter(p => p.category === currentCat);
+    if (q) list = list.filter(p => p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q));
+    list = list.filter(p => p.price <= maxPrice);
+
+    document.getElementById('resultCount').textContent = list.length + ' produit(s)';
+
+    if (list.length === 0) {
+      document.getElementById('products').style.display = 'none';
+      document.getElementById('noResults').style.display = 'block';
+    } else {
+      document.getElementById('products').style.display = 'grid';
+      document.getElementById('noResults').style.display = 'none';
+      document.getElementById('products').innerHTML = list.map(p => `
+        <div class="card">
+          <div class="card-icon">${p.image}</div>
+          <div class="card-cat">${p.category}</div>
+          <div class="card-name">${p.name}</div>
+          <div class="card-price">${fmt(p.price)}</div>
+          <button class="card-btn" onclick="add(${p.id})">Ajouter au panier</button>
+        </div>`).join('');
+    }
+  }
+
+  function filterCat(cat, btn) {
+    currentCat = cat;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    applyFilters();
+  }
+
+  function filterSearch() { applyFilters(); }
+
+  function filterPrice() {
+    maxPrice = parseInt(document.getElementById('priceRange').value);
+    document.getElementById('priceVal').textContent = maxPrice.toLocaleString('fr-FR');
+    applyFilters();
+  }
+
+  function add(id) {
+    const p = allProducts.find(x => x.id === id);
+    cart.push(p);
+    document.getElementById('cnt').textContent = cart.length;
+    document.getElementById('cartItems').innerHTML = cart.map(p =>
+      `<div class="cart-item"><span class="cart-item-name">${p.image} ${p.name}</span><span class="cart-item-price">${fmt(p.price)}</span></div>`).join('');
+    document.getElementById('total').textContent = fmt(cart.reduce((s, p) => s + p.price, 0));
+    toggleCart();
+  }
+
+  function toggleCart() {
+    document.getElementById('cartPanel').classList.toggle('open');
+    document.getElementById('overlay').classList.toggle('open');
+  }
+
+  function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+  function sub(e) { e.preventDefault(); alert('✅ Merci pour votre inscription !'); }
+</script>
+
+</body>
+</html>

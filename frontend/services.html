@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services — Sport & Fitness</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .services-hero {
+      position: relative;
+      height: 380px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    .services-hero img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .services-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+    }
+    .services-hero-content {
+      position: relative;
+      z-index: 2;
+      color: white;
+      max-width: 1200px;
+      margin: auto;
+      padding: 2rem;
+    }
+    .services-hero-content h1 { font-size: 42px; font-weight: 800; margin-bottom: 0.5rem; }
+    .services-hero-content p { font-size: 18px; color: rgba(255,255,255,0.8); }
+
+    .service-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      margin-bottom: 4rem;
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #eee;
+    }
+    .service-card.reverse { direction: rtl; }
+    .service-card.reverse > * { direction: ltr; }
+
+    .service-card img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
+
+    .service-info { padding: 2.5rem; }
+    .service-badge {
+      display: inline-block;
+      background: #fff0f1;
+      color: #e63946;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 5px 12px;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+    }
+    .service-info h2 { font-size: 24px; font-weight: 700; margin-bottom: 1rem; }
+    .service-info p { font-size: 15px; color: #666; line-height: 1.7; margin-bottom: 1rem; }
+    .service-features { list-style: none; margin-top: 1rem; }
+    .service-features li { padding: 6px 0; font-size: 14px; color: #555; }
+    .service-features li::before { content: "✓ "; color: #4caf50; font-weight: 700; }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .pricing-card {
+      background: white;
+      border: 1px solid #eee;
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+    .pricing-card:hover { transform: translateY(-4px); }
+    .pricing-card.featured { border: 2px solid #e63946; }
+    .pricing-card .badge { background: #e63946; color: white; font-size: 12px; padding: 4px 12px; border-radius: 12px; display: inline-block; margin-bottom: 1rem; }
+    .pricing-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 0.5rem; }
+    .pricing-card .price { font-size: 32px; font-weight: 800; color: #e63946; margin: 1rem 0; }
+    .pricing-card .price span { font-size: 14px; color: #aaa; font-weight: 400; }
+    .pricing-card ul { list-style: none; text-align: left; margin: 1.5rem 0; }
+    .pricing-card ul li { padding: 6px 0; font-size: 14px; color: #555; border-bottom: 1px solid #f5f5f5; }
+    .pricing-card ul li::before { content: "✓ "; color: #4caf50; }
+
+    @media (max-width: 768px) {
+      .service-card { grid-template-columns: 1fr; }
+      .service-card.reverse { direction: ltr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">⚡ Sport<span style="color:#e63946">&Fitness</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="boutique.html">Boutique</a></li>
+      <li><a href="services.html" class="active">Services</a></li>
+      <li><a href="about.html">À propos</a></li>
+      <li><a href="localisation.html">Localisation</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="header-actions">
+      <button class="cart-btn" onclick="window.location.href='boutique.html'">🛍 Boutique</button>
+      <button class="burger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">🏠 Accueil</a>
+  <a href="boutique.html">🛍 Boutique</a>
+  <a href="services.html">⚙️ Services</a>
+  <a href="about.html">👥 À propos</a>
+  <a href="localisation.html">📍 Localisation</a>
+  <a href="contact.html">✉️ Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="services-hero">
+  <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1920&q=90" alt="Services">
+  <div class="services-hero-content">
+    <h1>⚙️ Nos Services</h1>
+    <p>Tout ce dont vous avez besoin pour pratiquer votre sport dans les meilleures conditions</p>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<div class="section">
+
+  <div class="service-card">
+    <img src="https://images.unsplash.com/photo-1586880244406-556ebe35f282?w=800&q=90" alt="Livraison">
+    <div class="service-info">
+      <span class="service-badge">🚚 Livraison</span>
+      <h2>Livraison rapide partout au Sénégal</h2>
+      <p>Nous livrons vos commandes directement à votre domicile ou bureau. Profitez d'une livraison express en 24-48h à Dakar et en 72h dans les autres régions du Sénégal.</p>
+      <ul class="service-features">
+        <li>24-48h à Dakar</li>
+        <li>72h dans tout le Sénégal</li>
+        <li>Livraison gratuite dès 50 000 FCFA</li>
+        <li>Suivi de commande en temps réel</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="service-card reverse">
+    <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=90" alt="Coaching">
+    <div class="service-info">
+      <span class="service-badge">🏋️ Coaching</span>
+      <h2>Coaching personnalisé avec nos experts</h2>
+      <p>Nos coachs certifiés vous accompagnent dans votre progression sportive. Que vous soyez débutant ou athlète confirmé, nous avons le programme adapté à vos objectifs.</p>
+      <ul class="service-features">
+        <li>Séances individuelles ou en groupe</li>
+        <li>Programme nutritionnel inclus</li>
+        <li>Suivi de progression mensuel</li>
+        <li>Disponible en présentiel et en ligne</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="service-card">
+    <img src="https://images.unsplash.com/photo-1607082349566-187342175e2f?w=800&q=90" alt="Retours">
+    <div class="service-info">
+      <span class="service-badge">🔄 Retours</span>
+      <h2>Retours faciles sous 30 jours</h2>
+      <p>Vous n'êtes pas satisfait de votre achat ? Pas de problème ! Retournez-le dans les 30 jours suivant votre achat, sans justification. Remboursement sous 5 jours ouvrés.</p>
+      <ul class="service-features">
+        <li>30 jours pour retourner vos articles</li>
+        <li>Remboursement complet garanti</li>
+        <li>Échange possible</li>
+        <li>Collecte à domicile disponible</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<!-- COACHING PLANS -->
+<div style="background:#f8f8f6; padding:3rem 0;">
+  <div class="section" style="padding-top:0; padding-bottom:0">
+    <h2 class="section-title">Plans de coaching</h2>
+    <p class="section-sub">Choisissez le plan adapté à vos objectifs sportifs</p>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <h3>Starter</h3>
+        <div class="price">25 000 <span>FCFA/mois</span></div>
+        <ul>
+          <li>4 séances par mois</li>
+          <li>Programme personnalisé</li>
+          <li>Suivi par email</li>
+          <li>Accès aux ressources</li>
+        </ul>
+        <a href="contact.html" class="btn btn-outline" style="width:100%; text-align:center;">Choisir</a>
+      </div>
+      <div class="pricing-card featured">
+        <span class="badge">⭐ Populaire</span>
+        <h3>Pro</h3>
+        <div class="price">45 000 <span>FCFA/mois</span></div>
+        <ul>
+          <li>8 séances par mois</li>
+          <li>Programme + nutrition</li>
+          <li>Suivi WhatsApp</li>
+          <li>Analyse vidéo</li>
+          <li>Réduction 10% boutique</li>
+        </ul>
+        <a href="contact.html" class="btn btn-primary" style="width:100%; text-align:center;">Choisir</a>
+      </div>
+      <div class="pricing-card">
+        <h3>Elite</h3>
+        <div class="price">80 000 <span>FCFA/mois</span></div>
+        <ul>
+          <li>Séances illimitées</li>
+          <li>Coach dédié</li>
+          <li>Disponible 7j/7</li>
+          <li>Bilan mensuel complet</li>
+          <li>Réduction 20% boutique</li>
+        </ul>
+        <a href="contact.html" class="btn btn-outline" style="width:100%; text-align:center;">Choisir</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<div class="newsletter">
+  <h2>📧 Restez informé</h2>
+  <p>Recevez nos offres et actualités sportives par email.</p>
+  <form class="newsletter-form" onsubmit="e=>e.preventDefault()">
+    <input type="email" placeholder="Votre adresse email" required>
+    <button type="submit">S'abonner</button>
+  </form>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <h4>⚡ Sport & Fitness</h4>
+      <p style="font-size:14px;color:#888;margin-bottom:1rem">Votre partenaire sportif à Dakar.</p>
+      <p style="font-size:13px;color:#666">📍 Almadies, Dakar</p>
+      <p style="font-size:13px;color:#666">📞 +221 77 000 00 00</p>
+    </div>
+    <div>
+      <h4>Navigation</h4>
+      <a href="index.html">Accueil</a>
+      <a href="boutique.html">Boutique</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Sport & Fitness Shop</span>
+    <span>Made with ❤️ à Dakar</span>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+</script>
+</body>
+</html>
