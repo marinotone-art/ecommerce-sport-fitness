@@ -36,7 +36,7 @@ app.get('/products/category/:category', (req, res) => {
 // Servir le frontend
 app.use(express.static(path.join(__dirname, '../frontend')));
 
-app.get('*', (req, res) => {
+app.get(/^(?!\/products).*$/, (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend', 'index.html'));
 });
 
