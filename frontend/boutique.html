@@ -248,7 +248,7 @@
   let currentCat = 'Tous';
   let maxPrice = 300000;
 
-  fetch('/products')
+  fetch('https://ecommerce-sport-fitness.onrender.com/products')
     .then(r => r.json())
     .then(data => {
       allProducts = data;
