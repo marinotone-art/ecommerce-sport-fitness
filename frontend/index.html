@@ -492,7 +492,7 @@
   let allProducts = [];
   let cart = [];
 
-  fetch('http://localhost:3000/products')
+  fetch('/products')
     .then(r => r.json())
     .then(data => {
       allProducts = data;
