@@ -6,7 +6,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Catalogue Sport & Fitness
 const products = [
   { id: 1, name: "Ballon de Football", price: 15000, category: "Football", image: "⚽" },
   { id: 2, name: "Maillot de Football", price: 29500, category: "Football", image: "👕" },
@@ -22,22 +21,22 @@ const products = [
   { id: 12, name: "Montre GPS Sport", price: 130000, category: "Running", image: "⌚" }
 ];
 
-// Routes API
 app.get('/products', (req, res) => res.json(products));
+
 app.get('/products/:id', (req, res) => {
   const product = products.find(p => p.id === parseInt(req.params.id));
   if (!product) return res.status(404).json({ message: "Produit non trouvé" });
   res.json(product);
 });
+
 app.get('/products/category/:category', (req, res) => {
   res.json(products.filter(p => p.category === req.params.category));
 });
 
-// Servir le frontend
-app.use(express.static(path.join(__dirname, '../frontend')));
+app.use(express.static(path.join(__dirname, 'frontend')));
 
 app.get(/^(?!\/products).*$/, (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend', 'index.html'));
+  res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
 });
 
 const PORT = process.env.PORT || 3000;
