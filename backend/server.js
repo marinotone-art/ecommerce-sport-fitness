@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 app.use(cors());
@@ -21,29 +22,25 @@ const products = [
   { id: 12, name: "Montre GPS Sport", price: 130000, category: "Running", image: "⌚" }
 ];
 
-// Obtenir tous les produits
-app.get('/products', (req, res) => {
-  res.json(products);
-});
-
-// Obtenir un produit par ID
+// Routes API
+app.get('/products', (req, res) => res.json(products));
 app.get('/products/:id', (req, res) => {
   const product = products.find(p => p.id === parseInt(req.params.id));
   if (!product) return res.status(404).json({ message: "Produit non trouvé" });
   res.json(product);
 });
-
-// Obtenir produits par catégorie
 app.get('/products/category/:category', (req, res) => {
-  const filtered = products.filter(p => p.category === req.params.category);
-  res.json(filtered);
+  res.json(products.filter(p => p.category === req.params.category));
 });
 
-// Route de test
-app.get('/', (req, res) => {
-  res.json({ message: "🏋️ API Sport & Fitness fonctionne !" });
+// Servir le frontend
+app.use(express.static(path.join(__dirname, '../frontend')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend', 'index.html'));
 });
 
-app.listen(3000, () => {
-  console.log('Serveur démarré sur http://localhost:3000');
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Serveur démarré sur le port ${PORT}`);
 });
