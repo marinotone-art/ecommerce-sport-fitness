@@ -1,8 +1,12 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const client = require('prom-client');
 
 const app = express();
+const collectDefaultMetrics = client.collectDefaultMetrics;
+collectDefaultMetrics();
+
 app.use(cors());
 app.use(express.json());
 
@@ -21,6 +25,11 @@ const products = [
   { id: 12, name: "Montre GPS Sport", price: 130000, category: "Running", image: "⌚" }
 ];
 
+app.get('/metrics', async (req, res) => {
+  res.set('Content-Type', client.register.contentType);
+  res.end(await client.register.metrics());
+});
+
 app.get('/products', (req, res) => res.json(products));
 
 app.get('/products/:id', (req, res) => {
@@ -35,7 +44,7 @@ app.get('/products/category/:category', (req, res) => {
 
 app.use(express.static(path.join(__dirname, 'frontend')));
 
-app.get(/^(?!\/products).*$/, (req, res) => {
+app.get(/^(?!\/products|\/metrics).*$/, (req, res) => {
   res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
 });
 
