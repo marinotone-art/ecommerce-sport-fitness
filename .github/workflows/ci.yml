@@ -1,35 +1,37 @@
-name: CI Pipeline - Sport & Fitness
+name: CI Pipeline
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+push:
+branches:
+- main
 
 jobs:
-  build-and-test:
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: Récupérer le code
-        uses: actions/checkout@v3
+test-backend:
+runs-on: ubuntu-latest
+defaults:
+run:
+working-directory: ./backend
+steps:
+- uses: actions/checkout@v3
+- name: Setup Node
+uses: actions/setup-node@v3
+with: {node-version: '18'}
+- name: Install & Test Backend
+run: |
+npm install
+npm test
 
-      - name: Installer Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-
-      - name: Installer les dépendances
-        run: |
-          cd backend
-          npm install
-
-      - name: Vérifier que le serveur démarre
-        run: |
-          cd backend
-          timeout 10 node server.js &
-          sleep 5
-          curl http://localhost:3000/products || exit 1
-
-      - name: Test terminé avec succès
-        run: echo "✅ CI Pipeline réussi !"
+test-frontend:
+runs-on: ubuntu-latest
+defaults:
+run:
+working-directory: ./frontend
+steps:
+- uses: actions/checkout@v3
+- name: Setup Node
+uses: actions/setup-node@v3
+with: {node-version: '18'}
+- name: Install & Test Frontend
+run: |
+npm install
+npm test
