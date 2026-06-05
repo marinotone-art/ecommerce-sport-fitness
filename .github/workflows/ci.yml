@@ -35,3 +35,5 @@ with: {node-version: '18'}
 run: |
 npm install
 npm test
+
+# Force déclenchement pipeline
